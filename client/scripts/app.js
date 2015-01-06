@@ -4,8 +4,10 @@
 // Backbone-based Implementation of chatterbox client
 /////////////////////////////////////////////////////////////////////////////
 
+var server = 'http://127.0.0.1:3000/1/classes/chatterbox/';
+
 var Message = Backbone.Model.extend({
-  url: 'https://api.parse.com/1/classes/chatterbox/',
+  url: server,
   defaults: {
     username: '',
     text: '',
@@ -15,7 +17,7 @@ var Message = Backbone.Model.extend({
 
 var Messages = Backbone.Collection.extend({
   model: Message,
-  url: 'https://api.parse.com/1/classes/chatterbox/',
+  url: server,
 
   loadMsgs: function(){
     this.fetch({data: { order: '-createdAt' }});

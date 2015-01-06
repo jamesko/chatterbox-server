@@ -11,8 +11,9 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
+var exports = module.exports = {};
 
-var requestHandler = function(request, response) {
+exports.requestHandler = function(request, response) {
   // Request and Response come from node's http module.
   //
   // They include information about both the incoming request, such as
@@ -21,7 +22,6 @@ var requestHandler = function(request, response) {
   //
   // Documentation for both request and response can be found in the HTTP section at
   // http://nodejs.org/documentation/api/
-
   // Do some basic logging.
   //
   // Adding more logging to your server can be an easy way to get passive
@@ -29,8 +29,30 @@ var requestHandler = function(request, response) {
   // console.logs in your code.
   console.log("Serving request type " + request.method + " for url " + request.url);
 
+
+  if( request.method === 'GET'){
+    console.log("GET METHOD!!!");
+  } else if ( request.method === "POST" ){
+    console.log("POST METHOD");
+  } else if ( request.method === "PUT" ){
+    console.log("PUT METHOD");
+  } else if ( request.method === "DELETE" ){
+    console.log("DELETE METHOD");
+  } else if ( request.method === "OPTIONS" ){
+    console.log("OPTIONS METHOD");
+  } else if ( request.method === "SECRET-LAIR" ){
+    console.log("SECRET-LAIR METHOD");
+  }
+
   // The outgoing status.
   var statusCode = 200;
+
+  if(request.url !== "/1/classes/chatterbox/"){
+
+    console.log("HEY!!! WRONG REQUEST URL!!!");
+    // reject all other url request?????
+
+  }
 
   // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
@@ -39,7 +61,8 @@ var requestHandler = function(request, response) {
   //
   // You will need to change this if you are sending something
   // other than plain text, like JSON or HTML.
-  headers['Content-Type'] = "text/plain";
+  headers['Content-Type'] = "text/html"; //"text/plain";
+
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
@@ -64,10 +87,10 @@ var requestHandler = function(request, response) {
 //
 // Another way to get around this restriction is to serve you chat
 // client from this domain by setting up static file serving.
-var defaultCorsHeaders = {
+defaultCorsHeaders = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "access-control-allow-headers": "content-type, accept",
+  "access-control-allow-headers": "content-type, accept", // X-Parse-Application-Id, X-Parse-REST-API-Key
   "access-control-max-age": 10 // Seconds.
 };
 
