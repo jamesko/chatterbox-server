@@ -4,7 +4,7 @@
 // Backbone-based Implementation of chatterbox client
 /////////////////////////////////////////////////////////////////////////////
 
-var server = 'http://127.0.0.1:3000/1/classes/chatterbox/';
+var server = 'http://127.0.0.1:3000/classes/chatterbox/';
 
 var Message = Backbone.Model.extend({
   url: server,
