@@ -15,13 +15,11 @@ exports.requestHandler = function(request, response) {
 
   console.log("Serving request type " + request.method + " for url " + request.url);
 
-  // var urlFrag = request.url.split("?")[0];
-  // console.log(urlFrag);
-
-  if(request.url.indexOf("/classes/chatterbox") === -1){
+  if(request.url.indexOf("classes") === -1){
     console.log("inside bad url thing -->"+ request.url);
     response.writeHead(404, defaultCorsHeaders);
     response.end("Not Found");
+    return;
   }
 
   var statusCode = 200;
@@ -40,12 +38,7 @@ exports.requestHandler = function(request, response) {
 
       //response.end();
     });
-
-
-
     //console.log(dataObj.results);
-
-
     statusCode = 201;
 
   } else if ( request.method === "OPTIONS" ){
