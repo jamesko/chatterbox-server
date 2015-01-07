@@ -16,7 +16,7 @@ exports.requestHandler = function(request, response) {
   console.log("Serving request type " + request.method + " for url " + request.url);
 
   if(request.url.indexOf("classes") === -1){
-    console.log("inside bad url thing -->"+ request.url);
+    console.log("inside bad url filter -->"+ request.url);
     response.writeHead(404, defaultCorsHeaders);
     response.end("Not Found");
     return;
@@ -26,31 +26,27 @@ exports.requestHandler = function(request, response) {
 
   if( request.method === 'GET'){
     console.log("GET METHOD!!!");
+    response.writeHead(statusCode, defaultCorsHeaders);
+    response.end(JSON.stringify(dataObj));
+
 
   } else if ( request.method === "POST" ){
-
     console.log("POST METHOD");
-
     request.on('data', function(chunk){
       var userObj = JSON.parse(chunk.toString());
       userObj.objectId = objectId++;
       dataObj.results.push(userObj);
-
-      //response.end();
+      response.writeHead(201, defaultCorsHeaders);
+      response.end(JSON.stringify(userObj));
     });
-    //console.log(dataObj.results);
-    statusCode = 201;
 
   } else if ( request.method === "OPTIONS" ){
     console.log("OPTIONS METHOD");
+    response.writeHead(statusCode, defaultCorsHeaders);
+    response.end(JSON.stringify(dataObj));
   }
 
-  response.writeHead(statusCode, defaultCorsHeaders);
-  response.end(JSON.stringify(dataObj));
 };
-
-
-
 
 //------------------All comments moved below------------------
 
